@@ -1,0 +1,24 @@
+[submodule "VistaFlexInspect/TaskToolBox"]
+	path = VistaFlexInspect/TaskToolBox
+	url = https://github.com/Vista-Solutions-Inc/TaskToolBox.git
+[submodule "VistaFlexInspect/CommsLibrary"]
+	path = VistaFlexInspect/CommsLibrary
+	url = https://github.com/Vista-Solutions-Inc/CommsLibrary.git
+[submodule "VistaFlexInspect/MessageBusLibrary"]
+	path = VistaFlexInspect/MessageBusLibrary
+	url = https://github.com/Vista-Solutions-Inc/MessageBusLibrary.git
+[submodule "VistaFlexInspect/DevicesLibrary"]
+	path = VistaFlexInspect/DevicesLibrary
+	url = https://github.com/Vista-Solutions-Inc/DevicesLibrary.git
+[submodule "VistaFlexInspect/DevicesLibraryVisuals"]
+	path = VistaFlexInspect/DevicesLibraryVisuals
+	url = https://github.com/Vista-Solutions-Inc/DevicesLibraryVisuals.git
+[submodule "VistaFlexInspect/JobManagementModule"]
+	path = VistaFlexInspect/JobManagementModule
+	url = https://github.com/Vista-Solutions-Inc/JobManagementModule.git
+[submodule "VistaFlexInspect/VistaHelpersLibrary"]
+	path = VistaFlexInspect/VistaHelpersLibrary
+	url = https://github.com/Vista-Solutions-Inc/VistaHelpersLibrary.git
+[submodule "VistaFlexInspect/VistaControlsLibrary"]
+	path = VistaFlexInspect/VistaControlsLibrary
+	url = https://github.com/Vista-Solutions-Inc/VistaControlsLibrary.git

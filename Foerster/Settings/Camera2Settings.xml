@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CameraSettings>
+	<DeviceName>CamTest</DeviceName>
+	<InitializationTimeout>4000</InitializationTimeout>
+	<AcquisitionTimeout>10000</AcquisitionTimeout>
+	<DeviceType>Generic2DCamera</DeviceType>
+	<IsAsyncActivated>false</IsAsyncActivated>
+	<FramegrabberSettings>
+		<Online>
+			<Name>GigEVision2</Name>
+			<HorizontalResolution>0</HorizontalResolution>
+			<VerticalResolution>0</VerticalResolution>
+			<ImageWidth>0</ImageWidth>
+			<ImageHeight>0</ImageHeight>
+			<StartRow>0</StartRow>
+			<StartColumn>0</StartColumn>
+			<Field>progressive</Field>
+			<BitsPerChannel>-1</BitsPerChannel>
+			<ColorSpace>default</ColorSpace>
+			<Generic>-1</Generic>
+			<ExternalTrigger>false</ExternalTrigger>
+			<CameraType>default</CameraType>
+			<Device>Nano_M2420_1</Device>
+			<Port>0</Port>
+			<LineIn>-1</LineIn>
+		</Online>
+		<Emulation>
+			<Name>File</Name>
+			<HorizontalResolution>1</HorizontalResolution>
+			<VerticalResolution>1</VerticalResolution>
+			<ImageWidth>0</ImageWidth>
+			<ImageHeight>0</ImageHeight>
+			<StartRow>0</StartRow>
+			<StartColumn>0</StartColumn>
+			<Field>default</Field>
+			<BitsPerChannel>-1</BitsPerChannel>
+			<ColorSpace>default</ColorSpace>
+			<Generic>-1</Generic>
+			<ExternalTrigger>false</ExternalTrigger>
+			<CameraType>C:/Vista/Guidance/Offline/MainCam</CameraType>
+			<Device>default</Device>
+			<Port>1</Port>
+			<LineIn>-1</LineIn>
+		</Emulation>
+	</FramegrabberSettings>
+	<FramegrabberParamsNames>
+		<Param1>ExposureTime</Param1>
+	</FramegrabberParamsNames>
+
+	<FramegrabberParamsValues>
+		<Param1>15000</Param1>
+	</FramegrabberParamsValues>
+
+	<FramegrabberParamsTypes>
+		<Param1>int</Param1>
+	</FramegrabberParamsTypes>
+	
+	<CalibrationData>
+		<IsCalibrated>true</IsCalibrated>
+		<CameraParametersPath>C:\Vista\Guidance\CalibrationData\MainCam\calibrated_CamParams.dat</CameraParametersPath>
+		<IsHandEyeCalibrated>false</IsHandEyeCalibrated>
+		<CameraPosePath>C:\Vista\Guidance\CalibrationData\MainCam\ToolInCamPose.dat</CameraPosePath>
+		<IsRectifyCalibrated>true</IsRectifyCalibrated>
+		<RectifyMapPath>C:\Vista\Guidance\CalibrationData\MainCam\RectifyMap.hobj</RectifyMapPath>
+	</CalibrationData>
+</CameraSettings>

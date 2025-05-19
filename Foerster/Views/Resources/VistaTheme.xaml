@@ -1,0 +1,14 @@
+﻿<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Color x:Key="PrimaryColorVista">#0A18A1</Color>
+    <Color x:Key="SecondaryColorVista">#2840C8</Color>
+    <Color x:Key="AccentColorVista">#F65C0D</Color>
+    <Color x:Key="BackColorLightVista">#FFFFFF</Color>
+    <Color x:Key="BackColorDarkVista">#333132</Color>
+    <SolidColorBrush x:Key="PrimaryColorBrushVista" Color="{DynamicResource PrimaryColorVista}"/>
+    <SolidColorBrush x:Key="SecondaryColorBrushVista" Color="{DynamicResource SecondaryColorVista}"/>
+    <SolidColorBrush x:Key="AccentColorBrushVista" Color="{DynamicResource AccentColorVista}"/>
+    <SolidColorBrush x:Key="BackColorLightBrushVista" Color="{DynamicResource BackColorLightVista}"/>
+    <SolidColorBrush x:Key="BackColorDarkBrushVista" Color="{DynamicResource BackColorDarkVista}"/>
+</ResourceDictionary>

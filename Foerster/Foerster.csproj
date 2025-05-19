@@ -1,0 +1,104 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+	<Version>1.0.0</Version>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>vista_icon.ico</ApplicationIcon>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="MVTec.HalconDotNet-Windows" Version="24111.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="WPF-UI" Version="4.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\GenericIndustrialCamS.png" />
+    <None Remove="Assets\KeyenceLJ-X8000.png" />
+    <None Remove="Assets\MainCameraS.png" />
+    <None Remove="Assets\PhotoneoS.png" />
+    <None Remove="Assets\RobotWhiteS.png" />
+    <None Remove="Assets\SecondaryCameraS.png" />
+    <None Remove="Assets\SickRulerS.png" />
+    <None Remove="Assets\VirtualScan.png" />
+    <None Remove="Assets\VistaPrimaryLogo_LightBlueS.png" />
+    <None Remove="Assets\VistaSecondaryLogo_DarkBlueTS.png" />
+    <None Remove="Assets\wpfui-icon-256.png" />
+    <None Remove="Assets\wpfui-icon-1024.png" />
+    <None Remove="Assets\YaskawaMotomanS.png" />
+    <None Remove="vista_icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="vista_icon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VistaFlexInspect\CommsLibrary\CommsLibrary.csproj" />
+    <ProjectReference Include="..\VistaFlexInspect\DevicesLibraryVisuals\DevicesLibraryVisuals.csproj" />
+    <ProjectReference Include="..\VistaFlexInspect\DevicesLibrary\DevicesLibrary.csproj" />
+    <ProjectReference Include="..\VistaFlexInspect\JobManagementModule\JobManagement-Module.csproj" />
+    <ProjectReference Include="..\VistaFlexInspect\MessageBusLibrary\MessageBus.csproj" />
+    <ProjectReference Include="..\VistaFlexInspect\TaskToolBox\TaskToolBox.csproj" />
+    <ProjectReference Include="..\VistaFlexInspect\VistaControlsLibrary\VistaControls.csproj" />
+    <ProjectReference Include="..\VistaFlexInspect\VistaHelpersLibrary\VistaHelpers.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\GenericIndustrialCamS.png" />
+    <Resource Include="Assets\KeyenceLJ-X8000.png" />
+    <Resource Include="Assets\MainCameraS.png" />
+    <Resource Include="Assets\PhotoneoS.png" />
+    <Resource Include="Assets\RobotWhiteS.png" />
+    <Resource Include="Assets\SecondaryCameraS.png" />
+    <Resource Include="Assets\SickRulerS.png" />
+    <Resource Include="Assets\VirtualScan.png" />
+    <Resource Include="Assets\VistaPrimaryLogo_LightBlueS.png" />
+    <Resource Include="Assets\VistaSecondaryLogo_DarkBlueTS.png" />
+    <Resource Include="Assets\wpfui-icon-256.png" />
+    <Resource Include="Assets\wpfui-icon-1024.png" />
+    <Resource Include="Assets\YaskawaMotomanS.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Settings\Camera2Settings.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Settings\Camera1Settings.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Settings\DeviceManagerSettings.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Settings\GenericRobotLimitedControlSettings.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Settings\log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Settings\PhotoneoSettings.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Settings\RobotFullControlSettings.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Settings\SystemSettings.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Settings\Users.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

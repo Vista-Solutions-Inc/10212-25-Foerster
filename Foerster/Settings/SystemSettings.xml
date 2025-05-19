@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SystemSettings>
+	<SaveFilePath>C:/Vista/ProjectName/Save/SavedJobs</SaveFilePath>
+	<ImagesPath>C:/Vista/ProjectName/Captures</ImagesPath>
+	<AuthenticationPath>./Settings/Users.xml</AuthenticationPath>
+	<JobsFolderPath>C:/Vista/ProjectName/Jobs</JobsFolderPath>
+	<CalibrationAppPath>C:/Program Files/Vista Solutions/Camera Calibration App/CameraCalibrationApp.exe</CalibrationAppPath>
+</SystemSettings>

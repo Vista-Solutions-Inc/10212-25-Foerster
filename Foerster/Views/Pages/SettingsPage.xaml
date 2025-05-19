@@ -1,0 +1,71 @@
+﻿<Page
+    x:Class="Foerster.Views.Pages.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="clr-namespace:Foerster.Helpers"
+    xmlns:local="clr-namespace:Foerster.Views.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="SettingsPage"
+    d:DataContext="{d:DesignInstance local:SettingsPage,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="250"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Border  Margin="5,5,5,5" CornerRadius="10" Width="200"  Padding="5,5,5,5" Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}">
+                <StackPanel>
+                    <ui:TextBlock FontTypography="Subtitle" Text="Personalization" HorizontalAlignment="Center" />
+                    <ui:TextBlock Margin="10,12,0,0"  FontTypography="BodyStrong" Text="Theme" />
+                    <RadioButton Margin="10,8,0,0" Command="{Binding ViewModel.ChangeThemeCommand, Mode=OneWay}" CommandParameter="theme_light" Content="Light" GroupName="themeSelect"
+                                 IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}" />
+                    <RadioButton Margin="10,5,0,0" Command="{Binding ViewModel.ChangeThemeCommand, Mode=OneWay}" CommandParameter="theme_dark" Content="Dark" GroupName="themeSelect"
+                                 IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}" />
+                </StackPanel>
+            </Border>
+            <Border  Margin="5,5,5,5" CornerRadius="10"  Padding="5,5,5,5" Width="200"  Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}" IsEnabled="{Binding ViewModel.ExecutionControlsEnable}">
+                <StackPanel>
+                    <ui:TextBlock FontTypography="Subtitle" Text="Execution" HorizontalAlignment="Center" />
+                    <ui:TextBlock Margin="10,12,0,0"  FontTypography="BodyStrong" Text="Run Mode" />
+                    <RadioButton Margin="10,8,0,0" Content="Online" GroupName="runModeSelect" IsChecked="{Binding ViewModel.IsOnline}" IsEnabled="{Binding ViewModel.SwitchRunModeEnable}"/>
+                    <!--<RadioButton Margin="10,5,0,0" Content="Semiauto" Visibility="Collapsed" GroupName="runModeSelect" IsChecked="{Binding ViewModel.IsSemiauto}" />-->
+                    <RadioButton Margin="10,5,0,0"  Content="Offline" GroupName="runModeSelect" IsChecked="{Binding ViewModel.IsOffline}" IsEnabled="{Binding ViewModel.SwitchRunModeEnable}"/>
+                    <ui:ProgressRing Margin="5,10,1,1" IsIndeterminate="True" Visibility="{Binding ViewModel.ProgressRingVisibility}" Width="35" Height="35"/>
+
+                </StackPanel>
+            </Border>
+            <Border  Margin="5,5,5,5" CornerRadius="10"  Padding="5,5,5,5" Width="200"  Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}" IsEnabled="{Binding ViewModel.AdvancedControlsEnable}">
+                <StackPanel>
+                    <ui:TextBlock FontTypography="Subtitle" Text="Advanced" HorizontalAlignment="Center" />
+                    <ui:TextBlock Margin="10,20,0,0"  FontTypography="BodyStrong" Text="Debug Mode" />
+                    <ui:ToggleSwitch Margin="10,10,0,0" OffContent="Disabled" OnContent="Enabled" HorizontalAlignment="Center" IsChecked="{Binding ViewModel.DebugEnabled}"/>
+                    <ui:TextBlock Margin="10,20,0,0"  FontTypography="BodyStrong" Text="Capture Only Mode" />
+                    <ui:ToggleSwitch Margin="10,10,0,0" OffContent="Disabled" OnContent="Enabled"  HorizontalAlignment="Center" IsChecked="{Binding ViewModel.CaptureOnlyMode}"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <TextBlock
+            Margin="5,24,0,0"
+            FontSize="20"
+            FontWeight="Medium"
+            Text="About" />
+            <TextBlock Margin="5,12,5,5" Text="{Binding ViewModel.AppVersion, Mode=OneWay}" />
+            <TextBlock Margin="5,12,5,5" Text="{Binding ViewModel.AboutText, Mode=OneWay}" />
+        </StackPanel>
+
+    </Grid>
+</Page>

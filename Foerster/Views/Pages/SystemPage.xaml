@@ -1,0 +1,511 @@
+﻿<Page 
+    x:Class="Foerster.Views.Pages.SystemPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="clr-namespace:Foerster.Views.Pages"
+    xmlns:help ="clr-namespace:Foerster.ViewModels.Helpers"
+    xmlns:ha="http://schemas.mvtec.com/halcondotnet"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:vd="clr-namespace:VistaControls.Display;assembly=VistaControls"
+    Height="{Binding ActualHeight,RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType=Grid}}"
+
+    d:DesignHeight="700" d:DesignWidth="1000"
+    Title="SystemPage"
+    d:DataContext="{d:DesignInstance local:SystemPage, IsDesignTimeCreatable=False}"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <help:DetailsTemplateSelector x:Key="DetailsSelector"/>
+        <DataTemplate x:Key="DeviceTileTemplate" >
+            <Border CornerRadius="8,8,8,8" Background="{Binding TileBackground}" Margin="5,5,5,5">
+                <Grid Height="150" Width="150" Margin="5,5,5,5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="75"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="5"/>
+                    </Grid.RowDefinitions>
+                    <ui:InfoBadge Grid.Row="0"  HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Severity="{Binding BadgeSeverity}"/>
+                    <ui:Image Grid.Row="1"  Source="{Binding DeviceImageSource}"   Margin="10,10,10,10" Stretch="Uniform"/>
+                    <ui:TextBlock Grid.Row="2" Text="{Binding DeviceName}"  FontTypography="Subtitle" Margin="2,2,2,2"   Foreground="{StaticResource PrimaryColorBrushVista}" TextWrapping="Wrap"/>
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center">
+                        <ui:TextBlock Text="Status: "  FontTypography="BodyStrong" Margin="2,2,2,2"/>
+                        <ui:TextBlock  Text="{Binding DeviceStatus}" FontTypography="BodyStrong" Margin="2,2,2,2"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="RobotDeviceFullControlTemplate">
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="105"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.25*"/>
+                    <ColumnDefinition Width="0.25*"/>
+                    <ColumnDefinition Width="0.25*"/>
+                    <ColumnDefinition Width="0.25*"/>
+                </Grid.ColumnDefinitions>
+                <Border   Grid.Row="0" Grid.ColumnSpan="4"  CornerRadius="8,8,8,8" Margin="10,5,10,5"
+              BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}" Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"  >
+                    <Grid Grid.Row="1" Margin="10,5,10,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="220"/>
+                            <ColumnDefinition Width="130"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="140"/>
+                            <ColumnDefinition Width="400"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="42"/>
+                            <RowDefinition Height="42"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" DockPanel.Dock="Top">
+                            <ui:TextBlock   Text="Connection Status: " Margin="2,2,2,2" HorizontalAlignment="Left" VerticalAlignment="Center" FontTypography= "BodyStrong"/>
+                            <ui:TextBlock   Text="{Binding ConnectionStatus}" Margin="2,2,2,2" HorizontalAlignment="Left" VerticalAlignment="Center" FontTypography= "BodyStrong"/>
+                        </StackPanel>
+                        <ui:Button Grid.Column="2" Grid.Row="0" Content="Reconnect" Height="35" Width="110" HorizontalAlignment="Left" VerticalAlignment="Center" BorderThickness="1,1,1,1" Icon ="{ui:SymbolIcon PlugDisconnected24, Filled=false}" Margin="3,0,3,0" Command="{Binding ReconnectDeviceCommand}" Background="{DynamicResource SecondaryColorBrushVista}" MouseOverBackground="{DynamicResource PrimaryColorBrushVista}" Foreground="{DynamicResource BackColorLightBrushVista}"/>
+                        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" DockPanel.Dock="Top">
+                            <ui:TextBlock Text="Calibration Status: " Margin="2,2,2,2" HorizontalAlignment="Left" VerticalAlignment="Center" FontTypography= "BodyStrong"/>
+                            <ui:TextBlock Text="{Binding CalibrationStatus}" Margin="2,2,2,2" HorizontalAlignment="Left" VerticalAlignment="Center" FontTypography= "BodyStrong"/>
+                        </StackPanel>
+                        <ui:Button Grid.Column="2" Grid.Row="1" Content="Calibrate" Height="35" Width="110" HorizontalAlignment="Left" VerticalAlignment="Center" BorderThickness="1,1,1,1" Icon ="{ui:SymbolIcon CameraSparkles20, Filled=false}" Margin="3,0,3,0" Command="{Binding CalibrateDeviceCommand}" Background="{DynamicResource SecondaryColorBrushVista}" MouseOverBackground="{DynamicResource PrimaryColorBrushVista}" Foreground="{DynamicResource BackColorLightBrushVista}"/>
+                        <ui:TextBlock Grid.Column="4" Grid.Row="0" DockPanel.Dock="Top" Text="Settings File: " Margin="2,2,2,2" HorizontalAlignment="Right" VerticalAlignment="Center" FontTypography= "BodyStrong"/>
+                        <ui:TextBlock Grid.Column="5" Grid.Row="0" DockPanel.Dock="Top" Text="C://Path " Margin="2,2,2,2" HorizontalAlignment="Left" VerticalAlignment="Center" FontTypography= "BodyStrong"/>
+                        <ui:Button Grid.Column="5" Grid.Row="1" Content="Select" Height="35" Width="110" HorizontalAlignment="Left" VerticalAlignment="Center" BorderThickness="1,1,1,1" Icon ="{ui:SymbolIcon DocumentTextToolBox24, Filled=false}" Margin="3,0,3,0" Command="{Binding SelectDeviceSettingsFileCommand}" Background="{DynamicResource SecondaryColorBrushVista}" MouseOverBackground="{DynamicResource PrimaryColorBrushVista}" Foreground="{DynamicResource BackColorLightBrushVista}"/>
+                    </Grid>
+                </Border>
+                <Border   Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="8,8,8,8" Margin="10,5,10,10"
+              BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}" Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <ui:TextBlock  Grid.Row="0" Text="Status Variables" Margin="5,3,2,10" FontTypography= "Subtitle" MinHeight="30" HorizontalAlignment="Center" Foreground="{DynamicResource PrimaryColorBrushVista}" />
+                        <DataGrid Grid.Row="1" Margin="5,0,5,2" Background="{ui:ThemeResource CardBackgroundFillColorSecondaryBrush}"/>
+                    </Grid>
+                </Border>
+                <Border   Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" CornerRadius="8,8,8,8" Margin="10,5,10,10"
+              BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}" Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="15"/>
+                        </Grid.RowDefinitions>
+                        <ui:TextBlock  Grid.Row="0" Text="Functions" Margin="5,3,2,10" FontTypography= "Subtitle" MinHeight="30" HorizontalAlignment="Center" Foreground="{DynamicResource PrimaryColorBrushVista}" />
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.5*"/>
+                                <ColumnDefinition Width="0.5*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.5*"/>
+                                <RowDefinition Height="0.5*"/>
+                            </Grid.RowDefinitions>
+                            <ui:Button Grid.Column="0" Grid.Row="0" Content="E Stop" Height="55" Width="110" HorizontalAlignment="Right" VerticalAlignment="Center" BorderThickness="1,1,1,1" Icon ="{ui:SymbolIcon Stop24, Filled=true}" Margin="20,0,20,0" Command="{Binding StopRobotMotionCommand}" Background="{DynamicResource SecondaryColorBrushVista}" MouseOverBackground="{DynamicResource PrimaryColorBrushVista}" Foreground="{DynamicResource BackColorLightBrushVista}"/>
+                            <ui:Button Grid.Column="1" Grid.Row="0" Content="Home" Height="55" Width="110" HorizontalAlignment="Left" VerticalAlignment="Center" BorderThickness="1,1,1,1" Icon ="{ui:SymbolIcon Home24, Filled=true}" Margin="20,0,20,0" Command="{Binding SendRobotHomeCommand}" Background="{DynamicResource SecondaryColorBrushVista}" MouseOverBackground="{DynamicResource PrimaryColorBrushVista}" Foreground="{DynamicResource BackColorLightBrushVista}"/>
+                            <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical" Margin="5,5,5,5" HorizontalAlignment="Right">
+                                <ui:TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Travel Speed"  Margin="20,0,20,0" FontTypography= "BodyStrong" MinHeight="30" />
+                                <TextBox    VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" Height="30" MaxWidth="40" MinWidth="40" Text="{Binding RobotTravelSpeed}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" Margin="5,5,5,5" HorizontalAlignment="Left">
+                                <ui:TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Approach Speed" Margin="20,0,20,0" FontTypography= "BodyStrong" MinHeight="30" />
+                                <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" Height="30" MaxWidth="40" MinWidth="40" Text="{Binding RobotApproachSpeed}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="RobotDetailsLimitedControlTemplate">
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="105"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border   Grid.Row="0" Grid.ColumnSpan="2"  CornerRadius="8,8,8,8" Margin="10,5,10,5"
+              BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}" Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"  >
+                    <Grid VerticalAlignment="Stretch"  DockPanel.Dock="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <ui:TextBlock Grid.Column="0" DockPanel.Dock="Top" Text="Settings File: " Margin="2,2,2,2" HorizontalAlignment="Right" VerticalAlignment="Top" FontTypography= "BodyStrong"/>
+                        <ui:TextBlock Grid.Column="1"  DockPanel.Dock="Top" Text="{Binding SettingsFilePath}" Margin="2,2,2,2" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontTypography= "BodyStrong" TextWrapping="Wrap"/>
+                    </Grid>
+                </Border>
+                <Border   Grid.Row="1" Grid.Column="0" CornerRadius="8,8,8,8" Margin="10,5,10,10"
+              BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}" Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <ui:TextBlock  Grid.Row="0" Text="Status Variables" Margin="5,3,2,10" FontTypography= "Subtitle" MinHeight="30" HorizontalAlignment="Center" Foreground="{DynamicResource PrimaryColorBrushVista}" />
+                        <DataGrid Grid.Row="1" Margin="5,0,5,2" Background="{ui:ThemeResource CardBackgroundFillColorSecondaryBrush}"/>
+                    </Grid>
+                </Border>
+                <Border   Grid.Row="1" Grid.Column="1" CornerRadius="8,8,8,8" Margin="10,5,10,10"
+              BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}" Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="15"/>
+                        </Grid.RowDefinitions>
+                        <ui:TextBlock  Grid.Row="0" Text="Functions" Margin="5,3,2,10" FontTypography= "Subtitle" MinHeight="30" HorizontalAlignment="Center" Foreground="{DynamicResource PrimaryColorBrushVista}" />
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.5*"/>
+                                <ColumnDefinition Width="0.5*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.2*"/>
+                                <RowDefinition Height="0.2*"/>
+                                <RowDefinition Height="0.5*"/>
+                                <RowDefinition Height="0.5*"/>
+
+                            </Grid.RowDefinitions>
+                            <ui:Button Grid.Column="0" Grid.Row="0" Content="E Stop" Height="55" Width="110" HorizontalAlignment="Right" VerticalAlignment="Center" BorderThickness="1,1,1,1" Icon ="{ui:SymbolIcon Stop24, Filled=true}" Margin="20,0,20,0" Command="{Binding StopRobotMotionCommand}" Background="{DynamicResource SecondaryColorBrushVista}" MouseOverBackground="{DynamicResource PrimaryColorBrushVista}" Foreground="{DynamicResource BackColorLightBrushVista}"/>
+                            <ui:Button Grid.Column="1" Grid.Row="0" Content="Home" Height="55" Width="110" HorizontalAlignment="Left" VerticalAlignment="Center" BorderThickness="1,1,1,1" Icon ="{ui:SymbolIcon Home24, Filled=true}" Margin="20,0,20,0" Command="{Binding SendRobotHomeCommand}" Background="{DynamicResource SecondaryColorBrushVista}" MouseOverBackground="{DynamicResource PrimaryColorBrushVista}" Foreground="{DynamicResource BackColorLightBrushVista}"/>
+                            <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical" Margin="5,5,5,5" HorizontalAlignment="Right">
+                                <ui:TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Travel Speed"  Margin="20,0,20,0" FontTypography= "BodyStrong" MinHeight="30" />
+                                <TextBox    VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" Height="30" MaxWidth="40" MinWidth="40" Text="{Binding RobotTravelSpeed}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" Margin="5,5,5,5" HorizontalAlignment="Left">
+                                <ui:TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Approach Speed" Margin="20,0,20,0" FontTypography= "BodyStrong" MinHeight="30" />
+                                <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" Height="30" MaxWidth="40" MinWidth="40" Text="{Binding RobotApproachSpeed}"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Orientation="Vertical" Margin="5,5,5,5" HorizontalAlignment="Stretch" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type Page}}, Path=DataContext.ViewModel.MaintenanceEnabled}">
+                                <Grid HorizontalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ui:TextBlock Grid.Column="0"  VerticalAlignment="Center" HorizontalAlignment="Center" Text="Home Position"  FontTypography= "BodyStrong" />
+                                    <ui:Button    Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Center" Content="Set New Home"  BorderThickness="1,1,1,1" Icon ="{ui:SymbolIcon EditSettings20, Filled=true}" Margin="20,0,20,0" Command="{Binding SetHomePostionCommand}" Background="{DynamicResource SecondaryColorBrushVista}" MouseOverBackground="{DynamicResource PrimaryColorBrushVista}" Foreground="{DynamicResource BackColorLightBrushVista}"/>
+                                </Grid>
+
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0" Orientation="Vertical" Margin="5,5,5,5" HorizontalAlignment="Stretch" >
+                                        <ui:TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="" Margin="20,5,20,10" FontTypography= "BodyStrong" />
+                                        <ui:TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Translate" Margin="20,10,20,10" FontTypography= "BodyStrong" />
+                                        <ui:TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Rotation" Margin="20,10,20,10" FontTypography= "BodyStrong" />
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5,5,5,5" HorizontalAlignment="Stretch" >
+                                        <ui:TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="X" Margin="20,5,20,5" FontTypography= "BodyStrong" />
+                                        <ui:NumberBox  VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="12" Margin="0,5,0,5" MaxDecimalPlaces="2" SpinButtonPlacementMode="Hidden" Minimum="-5000" Maximum="5000" Value="{Binding SetHomePositionX}"/>
+                                        <ui:NumberBox  VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="12" Margin="0,5,0,5" MaxDecimalPlaces="2" SpinButtonPlacementMode="Hidden" Minimum="-360" Maximum="360" Value="{Binding SetHomePositionRX}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" Orientation="Vertical" Margin="5,5,5,5" HorizontalAlignment="Stretch">
+                                        <ui:TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Y" Margin="20,5,20,5" FontTypography= "BodyStrong" />
+                                        <ui:NumberBox  VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="12" Margin="0,5,0,5" MaxDecimalPlaces="2" SpinButtonPlacementMode="Hidden" Minimum="-5000" Maximum="5000" Value="{Binding SetHomePositionY}"/>
+                                        <ui:NumberBox  VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="12" Margin="0,5,0,5" MaxDecimalPlaces="2" SpinButtonPlacementMode="Hidden" Minimum="-360" Maximum="360" Value="{Binding SetHomePositionRY}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="3" Orientation="Vertical" Margin="5,5,5,5" HorizontalAlignment="Stretch">
+                                        <ui:TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Z" Margin="0,5,0,5" FontTypography= "BodyStrong" />
+                                        <ui:NumberBox  VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="12" Margin="0,5,0,5" MaxDecimalPlaces="2" SpinButtonPlacementMode="Hidden" Minimum="-5000" Maximum="5000" Value="{Binding SetHomePositionZ}"/>
+                                        <ui:NumberBox  VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="12" Margin="0,5,0,5" MaxDecimalPlaces="2" SpinButtonPlacementMode="Hidden" Minimum="-360" Maximum="360" Value="{Binding SetHomePositionRZ}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+
+
+                            <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Orientation="Vertical" Margin="5,5,5,5" HorizontalAlignment="Stretch">
+                                <Grid HorizontalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ui:TextBlock Grid.Column="0"  VerticalAlignment="Center" HorizontalAlignment="Center" Text="Current Postion" FontTypography= "BodyStrong"/>
+                                    <ui:Button    Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Center" Content="Get Current Postion"  BorderThickness="1,1,1,1" Icon ="{ui:SymbolIcon ArrowDown20, Filled=true}" Margin="20,0,20,0" Command="{Binding GetPositionCommand}" Background="{DynamicResource SecondaryColorBrushVista}" MouseOverBackground="{DynamicResource PrimaryColorBrushVista}" Foreground="{DynamicResource BackColorLightBrushVista}"/>
+                                </Grid>
+
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0" Orientation="Vertical" Margin="5,5,5,5" HorizontalAlignment="Stretch" >
+                                        <ui:TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="" Margin="20,5,20,10" FontTypography= "BodyStrong" />
+                                        <ui:TextBlock IsEnabled="False" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Translate" Margin="20,10,20,10" FontTypography= "BodyStrong" />
+                                        <ui:TextBlock IsEnabled="False" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Rotation" Margin="20,10,20,10" FontTypography= "BodyStrong" />
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5,5,5,5" HorizontalAlignment="Stretch" >
+                                        <ui:TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="X" Margin="20,5,20,5" FontTypography= "BodyStrong" />
+                                        <ui:NumberBox IsEnabled="False" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="12" Margin="0,5,0,5" MaxDecimalPlaces="6" SpinButtonPlacementMode="Hidden" Minimum="-5000" Maximum="5000" Value="{Binding CurrentPositionX}"/>
+                                        <ui:NumberBox IsEnabled="False" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="12" Margin="0,5,0,5" MaxDecimalPlaces="6" SpinButtonPlacementMode="Hidden" Minimum="-360" Maximum="360" Value="{Binding CurrentPositionRX}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" Orientation="Vertical" Margin="5,5,5,5" HorizontalAlignment="Stretch">
+                                        <ui:TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Y" Margin="20,5,20,5" FontTypography= "BodyStrong" />
+                                        <ui:NumberBox IsEnabled="False" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="12" Margin="0,5,0,5" MaxDecimalPlaces="6" SpinButtonPlacementMode="Hidden" Minimum="-5000" Maximum="5000" Value="{Binding CurrentPositionY}"/>
+                                        <ui:NumberBox IsEnabled="False" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="12" Margin="0,5,0,5" MaxDecimalPlaces="6" SpinButtonPlacementMode="Hidden" Minimum="-360" Maximum="360" Value="{Binding CurrentPositionRY}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="3" Orientation="Vertical" Margin="5,5,5,5" HorizontalAlignment="Stretch">
+                                        <ui:TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Z" Margin="0,5,0,5" FontTypography= "BodyStrong" />
+                                        <ui:NumberBox IsEnabled="False" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="12" Margin="0,5,0,5" MaxDecimalPlaces="6" SpinButtonPlacementMode="Hidden" Minimum="-5000" Maximum="5000" Value="{Binding CurrentPositionZ}"/>
+                                        <ui:NumberBox IsEnabled="False" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="12" Margin="0,5,0,5" MaxDecimalPlaces="6" SpinButtonPlacementMode="Hidden" Minimum="-360" Maximum="360" Value="{Binding CurrentPositionRZ}"/>
+                                    </StackPanel>
+                                </Grid>
+
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="CameraDetailsTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border   Grid.Row="0" Grid.ColumnSpan="2"  CornerRadius="8,8,8,8" Margin="10,5,10,5"
+BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}" Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"  >
+                    <Grid Grid.Row="1" Margin="10,5,10,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*"   MaxWidth="50"/>
+                            <ColumnDefinition Width="130"/>
+                            <ColumnDefinition Width="*"   MaxWidth="50"/>
+                            <ColumnDefinition Width="*" MinWidth="700"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" DockPanel.Dock="Top">
+                            <ui:TextBlock   Text="Connection Status: " Margin="2,2,2,2" HorizontalAlignment="Left" VerticalAlignment="Center" FontTypography= "BodyStrong"/>
+                            <ui:TextBlock   Text="{Binding DeviceStatus}" Margin="2,2,2,2" HorizontalAlignment="Left" VerticalAlignment="Center" FontTypography= "BodyStrong"/>
+                        </StackPanel>
+                        <ui:Button Grid.Column="2" Grid.Row="0" Content="Reconnect" Height="35" Width="110" HorizontalAlignment="Left" VerticalAlignment="Center" BorderThickness="1,1,1,1" Icon ="{ui:SymbolIcon PlugDisconnected24, Filled=false}" Margin="3,0,3,0" Command="{Binding ReconnectDeviceCommand}" Background="{DynamicResource SecondaryColorBrushVista}" MouseOverBackground="{DynamicResource PrimaryColorBrushVista}" Foreground="{DynamicResource BackColorLightBrushVista}"/>
+
+                        <Grid Grid.Column="4" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Stretch"  DockPanel.Dock="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <ui:TextBlock Grid.Column="0" DockPanel.Dock="Top" Text="Settings File: " Margin="2,2,2,2" HorizontalAlignment="Right" VerticalAlignment="Top" FontTypography= "BodyStrong"/>
+                            <ui:TextBlock Grid.Column="1"  DockPanel.Dock="Top" Text="{Binding SettingsFilePath}" Margin="2,2,2,2" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontTypography= "BodyStrong" TextWrapping="Wrap"/>
+                        </Grid>
+
+
+
+
+                        <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal" DockPanel.Dock="Top">
+                            <ui:TextBlock Text="Calibration Status: " Margin="2,2,2,2" HorizontalAlignment="Left" VerticalAlignment="Center" FontTypography= "BodyStrong"/>
+                            <ui:TextBlock Text="{Binding CalibrationStatus}" Margin="2,2,2,2" HorizontalAlignment="Left" VerticalAlignment="Center" FontTypography= "BodyStrong" Background="{DynamicResource SecondaryColorBrushVista}" />
+                        </StackPanel>
+
+                        <ui:Button Visibility="{Binding CalibrateButtonVisibility}" Grid.Column="2" Grid.Row="2" Content="Calibrate" Height="35" Width="110" HorizontalAlignment="Left" VerticalAlignment="Center" BorderThickness="1,1,1,1" Icon ="{ui:SymbolIcon CameraSparkles20, Filled=false}" Margin="3,0,3,0" Command="{Binding CalibrateDeviceCommand}" Background="{DynamicResource SecondaryColorBrushVista}" MouseOverBackground="{DynamicResource PrimaryColorBrushVista}" Foreground="{DynamicResource BackColorLightBrushVista}"  IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type Page}}, Path=DataContext.ViewModel.MaintenanceEnabled}"/>
+                    </Grid>
+                </Border>
+                <Border   Grid.Row="1" CornerRadius="8,8,8,8" Margin="10,5,10,10" Padding="15,0,15,0"
+BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}" Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="15"/>
+                        </Grid.RowDefinitions>
+                        <ui:TextBlock  Grid.Row="0" Text="Test" Margin="5,3,2,10" FontTypography= "Subtitle" MinHeight="30" HorizontalAlignment="Center" Foreground="{DynamicResource PrimaryColorBrushVista}" />
+                        <ha:HSmartWindowControlWPF Name="HSmartWindoDisplay"  Grid.Row="1" Margin="15,2,15,0">
+                            <ha:HIconicDisplayObjectWPF IconicObject="{Binding CurrentImage}" />
+                        </ha:HSmartWindowControlWPF>
+
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <vd:DisplayPixelValue Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,20,20,0" HSmartWindow="{Binding ElementName=HSmartWindoDisplay}" ImageDisplay="{Binding CurrentImage, Mode=TwoWay}" />
+                            <vd:ModifyLutDisplay  Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,20,20,0"  HSmartWindow="{Binding ElementName=HSmartWindoDisplay}"  LutDisplayType="{Binding LutDisplayType , Mode=TwoWay}" />
+
+                        </Grid>
+
+                    </Grid>
+                </Border>
+                <Grid Grid.Row="1" Grid.Column="1" >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border   Grid.Row="0" CornerRadius="8,8,8,8" Margin="10,5,10,10" BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}" Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}">
+                            <StackPanel Grid.Row="1" Margin="5,3,2,10" Grid.IsSharedSizeScope="True">
+                                <ui:TextBlock  Grid.Row="0" Text="Image Capture" Margin="5,3,2,10" FontTypography= "Subtitle" MinHeight="30" HorizontalAlignment="Center" Foreground="{DynamicResource PrimaryColorBrushVista}" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ui:Button Grid.Column="0" Grid.Row="0" Content="Snap" Height="55" Width="110" HorizontalAlignment="Right" VerticalAlignment="Center" BorderThickness="1,1,1,1" Icon ="{ui:SymbolIcon Camera24, Filled=true}" Margin="20,0,20,0" Command="{Binding SnapImageCommand}"/>
+                                    <ui:Button Grid.Column="1" Grid.Row="0" Content="Live" Height="55" Width="110" HorizontalAlignment="Left" VerticalAlignment="Center" BorderThickness="1,1,1,1" Icon ="{ui:SymbolIcon Video24, Filled=true}" Margin="20,0,20,0" 
+                                      Command="{Binding LiveCaptureCommand}"
+                                      Background="{DynamicResource SecondaryColorBrushVista}" MouseOverBackground="{DynamicResource PrimaryColorBrushVista}" Foreground="{DynamicResource BackColorLightBrushVista}"/>
+                                </Grid>
+                                <Grid HorizontalAlignment="Center" Margin="20,20,20,0" Visibility="{Binding IsMultyImageCamera}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" SharedSizeGroup="ExplanationLabel"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Image To Display :" Margin="0,5,5,5" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <ComboBox Grid.Column="2"  Name="ComboBoxSelectImageToShow"  ItemsSource="{Binding ImagesTypesList}" SelectedItem="{Binding SelectedImagesType}"/>
+                                </Grid>
+
+
+                                <ui:TextBlock  Grid.Row="0" Text="Emulation" Margin="5,3,2,10" FontTypography= "Subtitle" MinHeight="30" HorizontalAlignment="Center" Foreground="{DynamicResource PrimaryColorBrushVista}" />
+                                <Grid HorizontalAlignment="Stretch" Margin="20,10,20,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ui:Button Grid.Column="0" Grid.Row="0" Content="Change Path" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type Page}}, Path=DataContext.ViewModel.MaintenanceEnabled}" HorizontalAlignment="Left" VerticalAlignment="Center" BorderThickness="1,1,1,1" Icon ="{ui:SymbolIcon Folder24, Filled=true}" Margin="10,0,10,0" Command="{Binding SetNewEmulationFolderPathCommand}" Background="{DynamicResource SecondaryColorBrushVista}" MouseOverBackground="{DynamicResource PrimaryColorBrushVista}" Foreground="{DynamicResource BackColorLightBrushVista}"/>
+                                    <TextBlock Text="Emulation Folder Path :" Margin="0,5,5,5" Grid.Column="1"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <ui:TextBlock Grid.Column="2"  DockPanel.Dock="Top" Text="{Binding EmulationFolderPath}" Margin="2,2,2,2" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontTypography= "BodyStrong" TextWrapping="Wrap"/>
+                                </Grid>
+
+                            </StackPanel>
+                        </Border>
+
+                        <Border   Grid.Row="1" CornerRadius="8,8,8,8" Margin="10,5,10,10" 
+                                  BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}" 
+                                  Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                  >
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="auto" />
+                                </Grid.RowDefinitions>
+
+                                <Grid Margin="0,10,0,0" >
+                                    <Grid.RowDefinitions >
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <ui:TextBlock DockPanel.Dock="Top"  Margin="0,5,0,0" Grid.Row="0" Text="Parameters" FontTypography= "Subtitle" MinHeight="30" HorizontalAlignment="Center" Foreground="{StaticResource PrimaryColorBrushVista}"/>
+                                    <ui:Button Content="Update Parameters" Margin="0,5,0,0" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Command="{Binding UpdateParametersCommand}" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type Page}}, Path=DataContext.ViewModel.MaintenanceEnabled}" Background="{DynamicResource SecondaryColorBrushVista}" MouseOverBackground="{DynamicResource PrimaryColorBrushVista}" Foreground="{DynamicResource BackColorLightBrushVista}"/>
+                                </Grid>
+
+                                <Grid Grid.Row="1" >
+                                    <ScrollViewer  Height="{Binding ActualHeight,RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType=Grid}}" Margin="0,5,0,5">
+                                        <StackPanel Margin="0,5,0,0"  DockPanel.Dock="Top" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.IsSharedSizeScope="True">
+                                            <Grid Margin="0,5,0,5" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type Page}}, Path=DataContext.ViewModel.MaintenanceEnabled}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" SharedSizeGroup="ExplanationLabel"/>
+                                                    <ColumnDefinition Width="10"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <ui:TextBlock Grid.Column="0" Text="Exposure Time (us):" FontTypography= "BodyStrong" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                <TextBox  Grid.Column="2" HorizontalAlignment="Left"     Text="{Binding ExposureTime}" VerticalAlignment="Center"/>
+                                            </Grid>
+
+                                        </StackPanel>
+                                    </ScrollViewer>
+                                </Grid>
+
+
+                                <Grid Grid.Row="2" Margin="0,10,0,10" >
+                                    <ui:Button Content="Advanced Parameters" Margin="0,5,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Command="{Binding AdvancedParametersCommand}" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type Page}}, Path=DataContext.ViewModel.MaintenanceEnabled}" Background="{DynamicResource SecondaryColorBrushVista}" MouseOverBackground="{DynamicResource PrimaryColorBrushVista}" Foreground="{DynamicResource BackColorLightBrushVista}"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
+
+                        <Border   Grid.Row="2" CornerRadius="8,8,8,8" Margin="10,5,10,10" BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}" Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <ui:TextBlock Grid.Row="0" DockPanel.Dock="Top" Text="Device Messages" Margin="5,30,2,20" FontTypography= "Subtitle" MinHeight="30" HorizontalAlignment="Center" Foreground="{StaticResource PrimaryColorBrushVista}" />
+
+                                <Grid Grid.Row="1">
+
+                                    <ui:DataGrid GridLinesVisibility="All" DockPanel.Dock="Top"  ColumnWidth="Auto"  MaxHeight="330" Margin="15,0,10,10" ItemsSource="{Binding ErrorCodes, Mode=OneWay}" ScrollViewer.HorizontalScrollBarVisibility="Visible"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </Grid>
+
+        </DataTemplate>
+    </Page.Resources>
+    <Grid Height="{Binding ActualHeight,RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType=Grid}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="210"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Center">
+            <ui:TextBlock   Text="Devices" Margin="10,3,10,7" FontTypography= "Subtitle" MinHeight="30" Foreground="{StaticResource PrimaryColorBrushVista}"/>
+            <ListView ItemsSource="{Binding ViewModel.DeviceList}"
+                      ItemTemplate="{StaticResource DeviceTileTemplate}"
+                      SelectedItem="{Binding ViewModel.SelectedDevice}" BorderBrush="{x:Null}" Background="{x:Null}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"></StackPanel>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
+        </StackPanel>
+        <Separator Grid.Column="1"/>
+        <Grid Grid.Column="2" Margin="5,5,5,5" >
+            <Border CornerRadius="8,8,8,8" Background="{Binding ViewModel.SelectedDevice.TileBackground}"  >
+                <Grid  >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <ui:TextBlock Grid.Row="0" Text="Device Details" Margin="10,3,10,7" FontTypography= "Subtitle" MinHeight="30" Foreground="{StaticResource PrimaryColorBrushVista}"/>
+                    <Grid  Grid.Row="1" >
+                        <ContentControl Height="{Binding ActualHeight,RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType=Grid}}"  Content="{Binding ViewModel.SelectedDevice}" ContentTemplateSelector="{Binding Source= {StaticResource DetailsSelector}}" />
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+
+    </Grid>
+</Page>

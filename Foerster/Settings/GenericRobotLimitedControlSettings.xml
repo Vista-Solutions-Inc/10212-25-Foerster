@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<RobotSettings>
+	<DeviceName>Robot</DeviceName>
+	<ScaleFactorToMeters>1000</ScaleFactorToMeters>
+	<PoseType>2</PoseType>
+
+	<HomePose>
+		<X>1172</X>
+		<Y>-102</Y>
+		<Z>264</Z>
+		<RX>178.11</RX>
+		<RY>-3.21</RY>
+		<RZ>-25.49</RZ>
+	</HomePose>
+</RobotSettings>

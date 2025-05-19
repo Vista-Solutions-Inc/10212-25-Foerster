@@ -1,0 +1,164 @@
+﻿<Page x:Class="Foerster.Views.Pages.RuntimePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Foerster.Views.Pages"
+      xmlns:vc="clr-namespace:VistaControls.ResultsNavigation;assembly=VistaControls"
+      xmlns:vc2="clr-namespace:VistaControls.PerformanceMonitor;assembly=VistaControls"
+      xmlns:conv="clr-namespace:Foerster.Helpers"
+      xmlns:ha="http://schemas.mvtec.com/halcondotnet"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      mc:Ignorable="d"
+      d:DesignHeight="900" d:DesignWidth="1200"
+      Title="RuntimePage"
+      ui:NavigationView.HeaderContent="Run"
+      d:DataContext="{d:DesignInstance local:RuntimePage, IsDesignTimeCreatable=False}"
+      ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+      ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+    
+    <Page.Resources>
+        <!--Converters-->
+        <conv:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </Page.Resources>
+    <Grid Name="MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="45"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!--Job Meta-info-->
+            <Border Grid.Row="0" HorizontalAlignment="Stretch" 
+        CornerRadius="8"
+        Padding="10"
+        Margin="0,0,0,0"
+        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}">
+                <Grid>
+                    <DockPanel  LastChildFill="False">
+                        <!--Job Name-->
+                        <StackPanel Orientation="Horizontal"
+                    Grid.Column="0">
+                            <ui:TextBlock Text="Current Job:"
+                      VerticalAlignment="Center"
+                      Margin="0,0,10,0"
+                      FontTypography="Subtitle"/>
+                            <ui:TextBlock Text="{Binding ViewModel.CurrentJob.JobName}"
+                      VerticalAlignment="Center"
+                      Margin="5,0,40,0"
+                      Foreground="{DynamicResource SecondaryColorBrushVista}"
+                      FontTypography="Subtitle"/>
+                        </StackPanel>
+                        <!--Job Status-->
+                        <StackPanel DockPanel.Dock="Left" Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        Grid.Column="1">
+                            <ui:TextBlock Text="Job Status:"
+                          VerticalAlignment="Center"
+                          Margin="0,0,10,0"
+                          FontTypography="Subtitle"/>
+                            <ui:TextBlock Text="{Binding ViewModel.JobStatus}"
+                          VerticalAlignment="Center"
+                          Margin="5,0,5,0"
+                          Foreground="{DynamicResource SecondaryColorBrushVista}"
+                          FontTypography="Subtitle"/>
+                            <ui:ProgressRing Margin="10,0,0,0"
+                                 Width="30" Height="30"
+                                 Foreground="{DynamicResource AccentColorBrushVista}"
+                                 Visibility="{Binding ViewModel.ProgressBarEnable, Converter={StaticResource BoolToVisibilityConverter}}"
+                                 IsIndeterminate="True"/>
+                        </StackPanel>
+                        <!--Emulation Controls-->
+                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal"
+                        Height="50"
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Center"
+                        Visibility="{Binding ViewModel.ShowEmulationControls, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <ui:TextBlock Text="Emulation Controls"
+                              VerticalAlignment="Center"
+                              Margin="0,0,20,0"
+                              FontTypography="Subtitle"/>
+                            <!-- Play Button -->
+                            <ui:Button ToolTip="Start/resume job execution"
+                Icon="{ui:SymbolIcon Play20, Filled=True}"
+                           Cursor="Hand"
+                           FontSize="20"
+                           Width="50"
+                           VerticalAlignment="Stretch"
+                           Command="{Binding ViewModel.RunJobCommand}"
+                           PressedBackground="{DynamicResource AccentColorBrushVista}" 
+                           Background="{DynamicResource SecondaryColorBrushVista}" 
+                           MouseOverBackground="{DynamicResource PrimaryColorBrushVista}" 
+                           Foreground="{DynamicResource BackColorLightBrushVista}"
+                           IsEnabled="{Binding ViewModel.StartEnable}"/>
+
+                            <!-- Next Step Button -->
+                            <ui:Button ToolTip="Next step"
+                           Icon="{ui:SymbolIcon Next20, Filled=True}"
+                           Cursor="Hand"
+                           Width="50"
+                           FontSize="20"
+                           VerticalAlignment="Stretch"
+                           Command="{Binding ViewModel.NextStepCommand}"
+                           IsEnabled="{Binding ViewModel.NextStepEnable}"
+                           PressedBackground="{DynamicResource AccentColorBrushVista}" 
+                           Background="{DynamicResource SecondaryColorBrushVista}" 
+                           MouseOverBackground="{DynamicResource PrimaryColorBrushVista}" 
+                           Foreground="{DynamicResource BackColorLightBrushVista}"/>
+
+                            <!-- Pause Button -->
+                            <ui:Button ToolTip="Pause job execution"
+                           Icon="{ui:SymbolIcon Pause20, Filled=True}"
+                           Cursor="Hand"
+                           Width="50"
+                           FontSize="20"
+                           VerticalAlignment="Stretch"
+                           Command="{Binding ViewModel.StopJobCommand}"
+                           PressedBackground="{DynamicResource AccentColorBrushVista}" 
+                           Background="{DynamicResource SecondaryColorBrushVista}" 
+                           MouseOverBackground="{DynamicResource PrimaryColorBrushVista}" 
+                           Foreground="{DynamicResource BackColorLightBrushVista}"
+                           IsEnabled="{Binding ViewModel.StopEnable}"/>
+
+                            <!-- Reset Button -->
+                            <ui:Button ToolTip="Reset execution cycle"
+                           Icon="{ui:SymbolIcon ArrowReset24, Filled=True}"
+                           Cursor="Hand"
+                           Width="50"
+                           FontSize="20"
+                           VerticalAlignment="Stretch"
+                           Command="{Binding ViewModel.ResetCycleCommand}"
+                           IsEnabled="{Binding ViewModel.ResetEnable}"
+                           PressedBackground="{DynamicResource AccentColorBrushVista}" 
+                           Background="{DynamicResource SecondaryColorBrushVista}" 
+                           MouseOverBackground="{DynamicResource PrimaryColorBrushVista}" 
+                           Foreground="{DynamicResource BackColorLightBrushVista}"/>
+                        </StackPanel>
+                    </DockPanel>
+                </Grid>
+            </Border>
+            <!--Results Viewer-->
+            <Grid Grid.Row="1">
+                <ui:TextBlock Text="In this section, include the necessary code to display the results." FontTypography="BodyStrong" Padding="10,10,10,10"/>
+            </Grid>
+
+        </Grid>
+        <Grid Grid.Column="1" Name="PerformancePanelControl" Margin="{Binding ViewModel.PerformanceMargin}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.RowSpan="2">
+                <ui:Button  HorizontalAlignment="Center" VerticalAlignment="Top" Width="45" Height="45" Margin="0" FontSize="25" Foreground="{StaticResource SecondaryColorBrushVista}" Icon="{ui:SymbolIcon TopSpeed24, Filled=true}" Command="{Binding ViewModel.ChangePerformanceDisplayCommand}"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="2" Name="PerformanceGrid" Width="360" Visibility="{Binding ViewModel.PerformanceGridVisibility}">
+            <vc2:PerformanceMonitor LastJob="{Binding ViewModel.LastJob, Mode=TwoWay}" AvgJob="{Binding ViewModel.AvgJob, Mode=TwoWay}" LastStep="{Binding ViewModel.LastStep, Mode=TwoWay}" AvgStep="{Binding ViewModel.AvgStep, Mode=TwoWay}" TaskList="{Binding ViewModel.TaskList, Mode=TwoWay}" SelectedTask="{Binding ViewModel.SelectedTask}" AddTask="PerformanceMonitor_AddTask" DeleteTask="PerformanceMonitor_DeleteTask" MouseDoubleClick="PerformanceMonitor_MouseDoubleClick" />
+        </Grid>
+    </Grid>
+</Page>

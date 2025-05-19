@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DeviceManagerSettings>
+  <DeviceDefinition>
+
+    <DeviceType>
+		<Device1>Generic2DCamera</Device1>
+		<Device3>Generic2DCamera</Device3>
+	</DeviceType>
+  
+    <DeviceSettingsRelativePath>
+		<Device1>Camera1Settings.xml</Device1>
+		<Device3>Camera2Settings.xml</Device3>
+	</DeviceSettingsRelativePath>
+
+  </DeviceDefinition>
+</DeviceManagerSettings>
+

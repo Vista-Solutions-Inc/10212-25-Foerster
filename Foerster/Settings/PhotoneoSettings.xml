@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CameraSettings>
+	<DeviceName>Photoneo</DeviceName>
+	<InitializationTimeout>8000</InitializationTimeout>
+	<AcquisitionTimeout>8000</AcquisitionTimeout>
+	<DeviceType>Photoneo3DScannerOffline</DeviceType>
+	<IsAsyncActivated>false</IsAsyncActivated>
+
+	<FramegrabberSettings>
+		<Name>GenICamTL</Name>
+		<HorizontalResolution>0</HorizontalResolution>
+		<VerticalResolution>0</VerticalResolution>
+		<ImageWidth>0</ImageWidth>
+		<ImageHeight>0</ImageHeight>
+		<StartRow>0</StartRow>
+		<StartColumn>0</StartColumn>
+		<Field>progressive</Field>
+		<BitsPerChannel>-1</BitsPerChannel>
+		<ColorSpace>default</ColorSpace>
+		<Generic>-1</Generic>
+		<ExternalTrigger>false</ExternalTrigger>
+		<CameraType>default</CameraType>
+		<Device>PhotoneoTL_DEV_JEE-018</Device>
+		<Port>0</Port>
+		<LineIn>-1</LineIn>
+	</FramegrabberSettings>
+	
+	
+	<FramegrabberParamsNames>
+		<Param1>UseFixedDataOrdering</Param1>
+		<Param2>SendTexture</Param2>
+		<Param3>SendPointCloud</Param3>
+		<Param4>SendNormalMap</Param4>
+		<Param5>SendDepthMap</Param5>
+		<Param6>SendConfidenceMap</Param6>
+		<Param7>PhotoneoTriggerMode</Param7>
+	</FramegrabberParamsNames>
+	
+	<FramegrabberParamsValues>
+		<Param1>false</Param1>
+		<Param2>true</Param2>
+		<Param3>true</Param3>
+		<Param4>true</Param4>
+		<Param5>true</Param5>
+		<Param6>true</Param6>
+		<Param7>Software</Param7>
+	</FramegrabberParamsValues>
+	
+	
+	<CalibrationData>
+		<IsCalibrated>true</IsCalibrated>
+		<CameraParametersPath>C:\Vista\Guidance\CalibrationData\MainCam\calibrated_CamParams.dat</CameraParametersPath>
+		<CameraPosePath>C:\Vista\Guidance\CalibrationData\MainCam\ToolInCamPose.dat</CameraPosePath>
+	</CalibrationData>
+</CameraSettings>

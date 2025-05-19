@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UserRoles>
+  <Operator>
+    <Ps></Ps>
+    <Key></Key>
+  </Operator>
+  <Supervisor>
+    <Ps>pcrd1ygxJykI+jkL7FM7Xn/ym2fC25C+BEMnq+T3vKw=</Ps>
+    <Key>7tzLs92P7vkTtSxONw0w0Q==</Key>
+  </Supervisor>
+  <Administrator>
+    <Ps>fH2hJbrOH/cUwEx3VgPd1AWTncx5/COjnIg3vOUG+hw=</Ps>
+    <Key>7tzLs92P7vkTtSxONw0w0Q==</Key>
+  </Administrator>
+</UserRoles>
